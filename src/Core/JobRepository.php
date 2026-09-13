@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\Schedule\Core;
+namespace Naf\Schedule\Core;
 
-use NixPHP\Support\Collection;
+use Naf\Support\Collection;
 
 class JobRepository extends Collection
 {

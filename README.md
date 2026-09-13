@@ -1,23 +1,23 @@
 <div align="center" style="text-align: center;">
 
-![Logo](https://nixphp.github.io/docs/assets/nixphp-logo-small-square.png)
+![NAF](assets/naf-logo-small-square.png)
 
-[![NixPHP Schedule Plugin](https://github.com/nixphp/schedule/actions/workflows/php.yml/badge.svg)](https://github.com/nixphp/schedule/actions/workflows/php.yml)
+[![NAF Schedule Plugin](https://github.com/nafphp/schedule/actions/workflows/php.yml/badge.svg)](https://github.com/nafphp/schedule/actions/workflows/php.yml)
 
 </div>
 
-[← Back to NixPHP](https://github.com/nixphp/framework)
+[← Back to NAF](https://github.com/nafphp/framework)
 
 ---
 
-# nixphp/schedule
+# naf/schedule
 
-> **Minimalistic scheduling for NixPHP – cron-based, predictable, and queue-aware.**
+> **Minimalistic scheduling for NAF – cron-based, predictable, and queue-aware.**
 
 This plugin provides a lightweight scheduler for recurring tasks using cron expressions.
-It is designed to work seamlessly with the NixPHP Queue plugin, without introducing hidden magic or unnecessary complexity.
+It is designed to work seamlessly with the NAF Queue plugin, without introducing hidden magic or unnecessary complexity.
 
-> 🧩 Part of the official NixPHP plugin collection.  
+> 🧩 Part of the official NAF plugin collection.  
 > Use it when you want to run recurring jobs reliably – without relying on system cron files or external schedulers.
 
 ---
@@ -37,7 +37,7 @@ It is designed to work seamlessly with the NixPHP Queue plugin, without introduc
 ## 📥 Installation
 
 ```bash
-composer require nixphp/schedule
+composer require naf/schedule
 ````
 
 The plugin will be autoloaded automatically.
@@ -64,8 +64,8 @@ A scheduled job is a normal queue job that additionally implements
 `ScheduledJobInterface`:
 
 ```php
-use NixPHP\Schedule\Core\ScheduledJobInterface;
-use NixPHP\Queue\QueueJobInterface;
+use Naf\Schedule\Core\ScheduledJobInterface;
+use Naf\Queue\QueueJobInterface;
 
 class CleanupTempFiles implements ScheduledJobInterface, QueueJobInterface
 {
@@ -203,22 +203,22 @@ This keeps the system flexible and avoids hidden background processes.
 ## Supervisor example (optional)
 
 ```ini
-[program:nixphp-scheduler]
+[program:naf-scheduler]
 command=php bin/nix schedule:ticker
 directory=/path/to/your/app
 autostart=true
 autorestart=true
-stderr_logfile=/var/log/nixphp/scheduler.err.log
-stdout_logfile=/var/log/nixphp/scheduler.out.log
+stderr_logfile=/var/log/naf/scheduler.err.log
+stdout_logfile=/var/log/naf/scheduler.out.log
 ```
 
 ---
 
 ## Requirements
 
-* `nixphp/framework` ^0.1.0
-* `nixphp/queue` ^0.1.0
-* `nixphp/cli` ^0.1.0
+* `naf/framework` ^0.1.0
+* `naf/queue` ^0.1.0
+* `naf/cli` ^0.1.0
 
 ---
 

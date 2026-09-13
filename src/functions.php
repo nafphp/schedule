@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\Schedule;
+namespace Naf\Schedule;
 
-use NixPHP\Schedule\Core\Scheduler;
-use function NixPHP\app;
+use Naf\Schedule\Core\Scheduler;
+use function Naf\app;
 
 /**
  * @return Scheduler

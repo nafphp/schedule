@@ -1,9 +1,9 @@
 {
-  "name": "nixphp/schedule",
-  "description": "NixPHP Schedule Plugin for recurring Tasks.",
+  "name": "naf/schedule",
+  "description": "NAF Schedule Plugin for recurring Tasks.",
   "minimum-stability": "stable",
   "license": "MIT",
-  "type": "nixphp-plugin",
+  "type": "naf-plugin",
   "authors": [
     {
       "name": "Flo Knapp",
@@ -12,7 +12,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "NixPHP\\Schedule\\": "src/"
+      "Naf\\Schedule\\": "src/"
     }
   },
   "autoload-dev": {
@@ -23,8 +23,8 @@
   },
   "require": {
     "php": ">=8.3",
-    "nixphp/framework": "^0.1.0",
-    "nixphp/queue": "^0.1.0"
+    "naf/framework": "^0.2",
+    "naf/queue": "^0.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^12.1",

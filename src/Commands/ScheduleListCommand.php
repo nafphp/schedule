@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\Schedule\Commands;
+namespace Naf\Schedule\Commands;
 
 use DateTimeImmutable;
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
-use NixPHP\Schedule\Core\JobRepository;
-use NixPHP\Schedule\Core\ScheduledJobInterface;
-use NixPHP\Schedule\Support\CronParser;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
+use Naf\Schedule\Core\JobRepository;
+use Naf\Schedule\Core\ScheduledJobInterface;
+use Naf\Schedule\Support\CronParser;
 use Throwable;
-use function NixPHP\app;
+use function Naf\app;
 
 final class ScheduleListCommand extends AbstractCommand
 {
@@ -27,7 +27,7 @@ final class ScheduleListCommand extends AbstractCommand
 
     protected function configure(): void
     {
-        $this->setTitle('NixPHP Schedule')
+        $this->setTitle('NAF Schedule')
             ->setDescription('List scheduled jobs and their next run time.')
             ->addOption('from', null, true)
             ->addOption('no-sort', null);

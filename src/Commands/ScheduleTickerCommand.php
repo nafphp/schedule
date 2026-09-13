@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\Schedule\Commands;
+namespace Naf\Schedule\Commands;
 
-use NixPHP\CLI\Core\AbstractCommand;
-use NixPHP\CLI\Core\Input;
-use NixPHP\CLI\Core\Output;
-use NixPHP\Schedule\Core\Scheduler;
-use function NixPHP\app;
-use function NixPHP\log;
+use Naf\CLI\Core\AbstractCommand;
+use Naf\CLI\Core\Input;
+use Naf\CLI\Core\Output;
+use Naf\Schedule\Core\Scheduler;
+use function Naf\app;
+use function Naf\log;
 
 class ScheduleTickerCommand extends AbstractCommand
 {
@@ -26,7 +26,7 @@ class ScheduleTickerCommand extends AbstractCommand
 
     protected function configure(): void
     {
-        $this->setTitle('NixPHP Schedule Worker')
+        $this->setTitle('NAF Schedule Worker')
             ->setDescription('Execute recurring tasks with cron syntax.')
             ->addOption('max-jobs', null, true)
             ->addOption('max-runtime', null, true)
@@ -60,7 +60,7 @@ class ScheduleTickerCommand extends AbstractCommand
 
         while (true) {
             if ($maxJobs && $jobCount >= $maxJobs) {
-                $msg = 'NixPHP Schedule Worker: Max jobs reached... Quitting.';
+                $msg = 'NAF Schedule Worker: Max jobs reached... Quitting.';
                 $output->writeLine($msg);
                 log()->info($msg);
                 $this->terminateAllWorkers();
@@ -68,7 +68,7 @@ class ScheduleTickerCommand extends AbstractCommand
             }
 
             if ($maxRuntime && time() >= ($timeStarted + $maxRuntime)) {
-                $msg = 'NixPHP Schedule Worker: Max runtime reached... Quitting.';
+                $msg = 'NAF Schedule Worker: Max runtime reached... Quitting.';
                 $output->writeLine($msg);
                 log()->info($msg);
                 $this->terminateAllWorkers();

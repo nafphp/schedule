@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\Schedule\Core;
+namespace Naf\Schedule\Core;
 
-use NixPHP\Queue\Core\QueueJobInterface;
+use Naf\Queue\Core\QueueJobInterface;
 
 interface ScheduledJobInterface extends QueueJobInterface
 {

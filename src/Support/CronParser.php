@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\Schedule\Support;
+namespace Naf\Schedule\Support;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Optimized cron expression parser for NixPHP.
+ * Optimized cron expression parser for NAF.
  *
  * Supported syntax (classic 5-part cron):
  *

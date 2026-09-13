@@ -6,10 +6,10 @@ namespace Tests\Unit;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use NixPHP\Schedule\Support\CronParser;
-use Tests\NixPHPTestCase;
+use Naf\Schedule\Support\CronParser;
+use Tests\NafTestCase;
 
-class CronParserTest extends NixPHPTestCase
+class CronParserTest extends NafTestCase
 {
     public function testEveryMinuteExpressionReturnsNextMinute(): void
     {

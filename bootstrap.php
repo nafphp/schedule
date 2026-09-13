@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use NixPHP\Core\Container;
-use NixPHP\Queue\Core\Queue;
-use NixPHP\Schedule\Commands\ScheduleListCommand;
-use NixPHP\Schedule\Commands\ScheduleTickerCommand;
-use NixPHP\Schedule\Core\Scheduler;
-use NixPHP\Schedule\Core\JobRepository;
-use NixPHP\Schedule\Support\CronParser;
-use function NixPHP\app;
-use function NixPHP\CLI\command;
+use Naf\Core\Container;
+use Naf\Queue\Core\Queue;
+use Naf\Schedule\Commands\ScheduleListCommand;
+use Naf\Schedule\Commands\ScheduleTickerCommand;
+use Naf\Schedule\Core\Scheduler;
+use Naf\Schedule\Core\JobRepository;
+use Naf\Schedule\Support\CronParser;
+use function Naf\app;
+use function Naf\CLI\command;
 
 app()->container()->set(CronParser::class, static fn() => new CronParser());
 

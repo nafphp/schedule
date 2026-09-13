@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace NixPHP\Schedule\Core;
+namespace Naf\Schedule\Core;
 
 use DateTimeImmutable;
-use NixPHP\CLI\Core\Output;
-use NixPHP\Queue\Core\Queue;
-use NixPHP\Schedule\Support\CronParser;
-use function NixPHP\app;
-use function NixPHP\config;
+use Naf\CLI\Core\Output;
+use Naf\Queue\Core\Queue;
+use Naf\Schedule\Support\CronParser;
+use function Naf\app;
+use function Naf\config;
 
 class Scheduler
 {
@@ -23,7 +23,7 @@ class Scheduler
         private readonly CronParser    $cronParser,
         ?string $stateFile = null,
     ) {
-        $this->stateFile = $stateFile ?? sys_get_temp_dir() . '/nixphp-schedule-state.json';
+        $this->stateFile = $stateFile ?? sys_get_temp_dir() . '/naf-schedule-state.json';
         $this->loadState();
     }
 
