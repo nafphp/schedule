@@ -112,7 +112,7 @@ class ScheduleTickerCommand extends AbstractCommand
      */
     private function spawnQueueWorker(int $id, ?int $maxJobs = null, ?int $maxRuntime = null)
     {
-        $command = 'vendor/bin/nix queue:worker';
+        $command = 'vendor/bin/naf queue:worker';
 
         if ($maxJobs) {
             $command .= ' --max-jobs=' . $maxJobs;
