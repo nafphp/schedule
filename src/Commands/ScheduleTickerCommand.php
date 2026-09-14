@@ -8,6 +8,8 @@ use Naf\CLI\Core\AbstractCommand;
 use Naf\CLI\Core\Input;
 use Naf\CLI\Core\Output;
 use Naf\Schedule\Core\Scheduler;
+use RuntimeException;
+
 use function Naf\app;
 use function Naf\log;
 
@@ -18,9 +20,8 @@ class ScheduleTickerCommand extends AbstractCommand
     /** @var array<int, resource> */
     private array $workers = [];
 
-    public function __construct(
-        private readonly Scheduler $scheduler,
-    ) {
+    public function __construct(private readonly Scheduler $scheduler)
+    {
         parent::__construct();
     }
 
@@ -45,7 +46,7 @@ class ScheduleTickerCommand extends AbstractCommand
         $jobCount    = 0;
         $maxJobs     = $input->getOption('max-jobs') ?? 0;
         $maxRuntime  = $input->getOption('max-runtime') ?? 0;
-        $workerCount = (int)($input->getOption('workers') ?? 0);
+        $workerCount = (int) ($input->getOption('workers') ?? 0);
 
         $timeStarted = time();
 
@@ -56,47 +57,60 @@ class ScheduleTickerCommand extends AbstractCommand
         $output->writeLine('Schedule ticker started at ' . date('Y-m-d H:i:s', $timeStarted));
 
         if ($workerCount > 0) {
-            $output->writeLine("{$workerCount} Queue workers started at " . date('Y-m-d H:i:s', $timeStarted));
+            $output->writeLine(
+                "{$workerCount} Queue workers started at " . date('Y-m-d H:i:s', $timeStarted),
+            );
         }
 
         try {
-        while (true) {
-            $heartbeat = \Naf\config('schedule:heartbeat_file');
-            if (is_string($heartbeat) && $heartbeat !== '' && file_put_contents($heartbeat, (string) time(), LOCK_EX) === false) throw new \RuntimeException('Cannot write schedule heartbeat.');
-            if ($maxJobs && $jobCount >= $maxJobs) {
-                $msg = 'NAF Schedule Worker: Max jobs reached... Quitting.';
-                $output->writeLine($msg);
-                log()->info($msg);
-                $this->terminateAllWorkers();
-                break;
+            while (true) {
+                $heartbeat = \Naf\config('schedule:heartbeat_file');
+                if (
+                    is_string($heartbeat)
+                    && $heartbeat !== ''
+                    && file_put_contents($heartbeat, (string) time(), LOCK_EX) === false
+                ) {
+                    throw new RuntimeException('Cannot write schedule heartbeat.');
+                }
+                if ($maxJobs && $jobCount >= $maxJobs) {
+                    $msg = 'NAF Schedule Worker: Max jobs reached... Quitting.';
+                    $output->writeLine($msg);
+                    log()->info($msg);
+                    $this->terminateAllWorkers();
+                    break;
+                }
+
+                if ($maxRuntime && time() >= $timeStarted + $maxRuntime) {
+                    $msg = 'NAF Schedule Worker: Max runtime reached... Quitting.';
+                    $output->writeLine($msg);
+                    log()->info($msg);
+                    $this->terminateAllWorkers();
+                    break;
+                }
+
+                $jobCount = $this->scheduler->tick($output);
+                if ($input->getOption('once')) {
+                    break;
+                }
+
+                if (!empty($this->workers)) {
+                    $this->superviseWorkers($maxJobs, $maxRuntime, $output);
+                }
+
+                usleep(500_000);
             }
-
-            if ($maxRuntime && time() >= ($timeStarted + $maxRuntime)) {
-                $msg = 'NAF Schedule Worker: Max runtime reached... Quitting.';
-                $output->writeLine($msg);
-                log()->info($msg);
-                $this->terminateAllWorkers();
-                break;
-            }
-
-            $jobCount = $this->scheduler->tick($output);
-            if ($input->getOption('once')) break;
-
-            if (!empty($this->workers)) {
-                $this->superviseWorkers($maxJobs, $maxRuntime, $output);
-            }
-
-            usleep(500_000);
+        } finally {
+            $this->terminateAllWorkers();
         }
 
-        } finally { $this->terminateAllWorkers(); }
         return self::SUCCESS;
     }
 
     private function superviseWorkers(int $maxJobs, int $maxRuntime, Output $output)
     {
         foreach ($this->workers as $i => $proc) {
-            if (!is_resource($proc)) { // Restart dead workers
+            if (!is_resource($proc)) {
+                // Restart dead workers
                 $this->workers[$i] = $this->spawnQueueWorker($i, $maxJobs, $maxRuntime);
                 continue;
             }
@@ -138,7 +152,7 @@ class ScheduleTickerCommand extends AbstractCommand
         }
 
         $descriptorSpec = [
-            0 => ['pipe', 'r'],                                   // stdin (we close immediately)
+            0 => ['pipe', 'r'], // stdin (we close immediately)
             1 => ['file', "{$logDir}/worker-{$id}.out.log", 'a'], // stdout
             2 => ['file', "{$logDir}/worker-{$id}.err.log", 'a'], // stderr
         ];
@@ -147,7 +161,7 @@ class ScheduleTickerCommand extends AbstractCommand
         $proc  = proc_open($command, $descriptorSpec, $pipes, $cwd);
 
         if (!is_resource($proc)) {
-            throw new \RuntimeException("Failed to spawn queue worker #{$id}");
+            throw new RuntimeException("Failed to spawn queue worker #{$id}");
         }
 
         // stdin not needed
