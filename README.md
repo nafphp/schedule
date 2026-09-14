@@ -37,3 +37,10 @@ composer require naf/schedule
 ## License
 
 MIT. Part of [NAF](https://github.com/nafphp/framework).
+
+
+## Unreleased Nafinity integration candidate
+
+Target branch: `v0.2.3-rc`. This behavior is not a published release yet.
+
+The ticker starts the actual queue:consume command, supports --once, and terminates its managed children on exit. Tick state uses a file lock, reload and atomic replacement; failed enqueue does not mark a minute complete. Use durable queue job IDs for consumer deduplication across enqueue/state crash boundaries. Optional schedule:heartbeat_file records ticker polling activity.

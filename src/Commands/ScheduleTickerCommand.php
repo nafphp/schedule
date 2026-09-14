@@ -30,7 +30,8 @@ class ScheduleTickerCommand extends AbstractCommand
             ->setDescription('Execute recurring tasks with cron syntax.')
             ->addOption('max-jobs', null, true)
             ->addOption('max-runtime', null, true)
-            ->addOption('workers', null, true);
+            ->addOption('workers', null, true)
+            ->addOption('once');
     }
 
     public function run(Input $input, Output $output): int
@@ -58,7 +59,10 @@ class ScheduleTickerCommand extends AbstractCommand
             $output->writeLine("{$workerCount} Queue workers started at " . date('Y-m-d H:i:s', $timeStarted));
         }
 
+        try {
         while (true) {
+            $heartbeat = \Naf\config('schedule:heartbeat_file');
+            if (is_string($heartbeat) && $heartbeat !== '' && file_put_contents($heartbeat, (string) time(), LOCK_EX) === false) throw new \RuntimeException('Cannot write schedule heartbeat.');
             if ($maxJobs && $jobCount >= $maxJobs) {
                 $msg = 'NAF Schedule Worker: Max jobs reached... Quitting.';
                 $output->writeLine($msg);
@@ -76,6 +80,7 @@ class ScheduleTickerCommand extends AbstractCommand
             }
 
             $jobCount = $this->scheduler->tick($output);
+            if ($input->getOption('once')) break;
 
             if (!empty($this->workers)) {
                 $this->superviseWorkers($maxJobs, $maxRuntime, $output);
@@ -84,6 +89,7 @@ class ScheduleTickerCommand extends AbstractCommand
             usleep(500_000);
         }
 
+        } finally { $this->terminateAllWorkers(); }
         return self::SUCCESS;
     }
 
@@ -112,7 +118,7 @@ class ScheduleTickerCommand extends AbstractCommand
      */
     private function spawnQueueWorker(int $id, ?int $maxJobs = null, ?int $maxRuntime = null)
     {
-        $command = 'vendor/bin/naf queue:worker';
+        $command = escapeshellarg(PHP_BINARY) . ' vendor/bin/naf queue:consume';
 
         if ($maxJobs) {
             $command .= ' --max-jobs=' . $maxJobs;
