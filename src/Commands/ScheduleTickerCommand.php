@@ -7,6 +7,7 @@ namespace Naf\Schedule\Commands;
 use Naf\CLI\Core\AbstractCommand;
 use Naf\CLI\Core\Input;
 use Naf\CLI\Core\Output;
+use Naf\CLI\Exception\ConsoleException;
 use Naf\Schedule\Core\Scheduler;
 use RuntimeException;
 
@@ -43,26 +44,35 @@ class ScheduleTickerCommand extends AbstractCommand
             return self::SUCCESS;
         }
 
+        $limits = [];
+        foreach (['max-jobs', 'max-runtime', 'workers'] as $name) {
+            $value = $input->getOption($name) ?? 0;
+            if ((!is_string($value) && !is_int($value)) || filter_var($value, FILTER_VALIDATE_INT) === false || (int) $value < 0) {
+                throw new ConsoleException('--' . $name . ' requires a non-negative integer.');
+            }
+            $limits[$name] = (int) $value;
+        }
+
         $jobCount    = 0;
-        $maxJobs     = $input->getOption('max-jobs') ?? 0;
-        $maxRuntime  = $input->getOption('max-runtime') ?? 0;
-        $workerCount = (int) ($input->getOption('workers') ?? 0);
+        $maxJobs     = $limits['max-jobs'];
+        $maxRuntime  = $limits['max-runtime'];
+        $workerCount = $limits['workers'];
 
         $timeStarted = time();
 
-        for ($i = 0; $i < $workerCount; $i++) {
-            $this->workers[$i] = $this->spawnQueueWorker($i, $maxJobs, $maxRuntime);
-        }
-
-        $output->writeLine('Schedule ticker started at ' . date('Y-m-d H:i:s', $timeStarted));
-
-        if ($workerCount > 0) {
-            $output->writeLine(
-                "{$workerCount} Queue workers started at " . date('Y-m-d H:i:s', $timeStarted),
-            );
-        }
-
         try {
+            for ($i = 0; $i < $workerCount; $i++) {
+                $this->workers[$i] = $this->spawnQueueWorker($i, $maxJobs, $maxRuntime);
+            }
+
+            $output->writeLine('Schedule ticker started at ' . date('Y-m-d H:i:s', $timeStarted));
+
+            if ($workerCount > 0) {
+                $output->writeLine(
+                    "{$workerCount} Queue workers started at " . date('Y-m-d H:i:s', $timeStarted),
+                );
+            }
+
             while (true) {
                 $heartbeat = \Naf\config('schedule:heartbeat_file');
                 if (
@@ -132,21 +142,18 @@ class ScheduleTickerCommand extends AbstractCommand
      */
     private function spawnQueueWorker(int $id, ?int $maxJobs = null, ?int $maxRuntime = null)
     {
-        $command = escapeshellarg(PHP_BINARY) . ' vendor/bin/naf queue:consume';
+        $command = [PHP_BINARY, 'vendor/bin/naf', 'queue:consume'];
 
         if ($maxJobs) {
-            $command .= ' --max-jobs=' . $maxJobs;
+            $command[] = '--max-jobs=' . $maxJobs;
         }
 
         if ($maxRuntime) {
-            $command .= ' --max-runtime=' . $maxRuntime;
+            $command[] = '--max-runtime=' . $maxRuntime;
         }
 
         $cwd    = app()->getBasePath();
-        $logDir = log()->getLogDir();
-
-        // Prefer a project-local log directory
-        $logDir = $logDir . '/queue';
+        $logDir = $cwd . '/logs/queue';
         if (!is_dir($logDir)) {
             mkdir($logDir, 0777, true);
         }

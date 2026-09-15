@@ -43,4 +43,9 @@ MIT. Part of [NAF](https://github.com/nafphp/framework).
 
 Target branch: `v0.2.3-rc`. This behavior is not a published release yet.
 
+`schedule:ticker --workers=1 --max-jobs=10 --max-runtime=60` starts the real queue
+consumer with validated integer limits. Embedded workers write to the host's
+`logs/queue/` directory and work with any PSR-3 logger. The ticker closes its child
+processes when it exits or fails. `--once` runs one scheduling pass.
+
 The ticker starts the actual queue:consume command, supports --once, and terminates its managed children on exit. Tick state uses a file lock, reload and atomic replacement; failed enqueue does not mark a minute complete. Use durable queue job IDs for consumer deduplication across enqueue/state crash boundaries. Optional schedule:heartbeat_file records ticker polling activity.
