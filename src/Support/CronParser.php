@@ -41,10 +41,10 @@ final class CronParser
         $month   = (int) $dateTime->format('n');
         $weekday = (int) $dateTime->format('w');
 
-        return $this->match($parts[0], $minute,  0, 59)
-            && $this->match($parts[1], $hour,    0, 23)
-            && $this->match($parts[2], $day,     1, 31)
-            && $this->match($parts[3], $month,   1, 12)
+        return $this->match($parts[0], $minute, 0, 59)
+            && $this->match($parts[1], $hour, 0, 23)
+            && $this->match($parts[2], $day, 1, 31)
+            && $this->match($parts[3], $month, 1, 12)
             && $this->match($parts[4], $weekday, 0, 6);
     }
 
@@ -78,7 +78,7 @@ final class CronParser
         }
 
         $normalized = preg_replace('/\s+/', ' ', trim($expression));
-        $parts = explode(' ', $normalized);
+        $parts      = explode(' ', $normalized);
 
         if (count($parts) !== 5) {
             throw new InvalidArgumentException("Invalid cron expression: {$expression}");
@@ -100,12 +100,14 @@ final class CronParser
         // Fast path: single digit
         if (ctype_digit($expr)) {
             $int = (int) $expr;
+
             return $int >= $min && $int <= $max && $value === $int;
         }
 
         // Step: */5
         if (str_starts_with($expr, '*/')) {
             $step = (int) substr($expr, 2);
+
             return $step > 0 && ($value - $min) % $step === 0;
         }
 
@@ -116,14 +118,16 @@ final class CronParser
                     return true;
                 }
             }
+
             return false;
         }
 
         // Range: 5-10
         if (str_contains($expr, '-')) {
             [$start, $end] = explode('-', $expr, 2);
-            $start = max((int) $start, $min);
-            $end = min((int) $end, $max);
+            $start         = max((int) $start, $min);
+            $end           = min((int) $end, $max);
+
             return $value >= $start && $value <= $end;
         }
 

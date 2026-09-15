@@ -49,3 +49,10 @@ consumer with validated integer limits. Embedded workers write to the host's
 processes when it exits or fails. `--once` runs one scheduling pass.
 
 The ticker starts the actual queue:consume command, supports --once, and terminates its managed children on exit. Tick state uses a file lock, reload and atomic replacement; failed enqueue does not mark a minute complete. Use durable queue job IDs for consumer deduplication across enqueue/state crash boundaries. Optional schedule:heartbeat_file records ticker polling activity.
+
+## PHP code style
+
+Source, tests and PHP templates follow the shared [NAF code style](https://github.com/nafphp/docs/blob/main/CODE_STYLE.md)
+(PER Coding Style 3.0 with the Nafinity readability rules). After `composer install`, run
+`composer style:check` to verify formatting or `composer style:fix` to apply it. The formatter
+is a development dependency. Review template output and run the package checks after changes.

@@ -8,5 +8,4 @@ use Naf\Support\Collection;
 
 class JobRepository extends Collection
 {
-
 }

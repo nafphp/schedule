@@ -21,7 +21,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $nextMinute->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -36,7 +36,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -51,7 +51,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -66,7 +66,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -81,7 +81,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -141,7 +141,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $nextMinute->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -156,7 +156,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -165,9 +165,9 @@ class CronParserTest extends NafTestCase
         $expression = '5-7,10 * * * *'; // minutes 5,6,7 and 10
         $parser     = new CronParser();
 
-        $atSix  = new DateTimeImmutable('2024-01-01 12:06:00');
-        $atTen  = new DateTimeImmutable('2024-01-01 12:10:00');
-        $atEight= new DateTimeImmutable('2024-01-01 12:08:00');
+        $atSix   = new DateTimeImmutable('2024-01-01 12:06:00');
+        $atTen   = new DateTimeImmutable('2024-01-01 12:10:00');
+        $atEight = new DateTimeImmutable('2024-01-01 12:08:00');
 
         $this->assertTrue($parser->isDue($expression, $atSix));
         $this->assertTrue($parser->isDue($expression, $atTen));
@@ -197,7 +197,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -212,7 +212,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -228,7 +228,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -244,7 +244,7 @@ class CronParserTest extends NafTestCase
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
@@ -283,7 +283,7 @@ class CronParserTest extends NafTestCase
     public function testMinuteBoundaryZeroMatches(): void
     {
         $expression = '0 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $atZero = new DateTimeImmutable('2024-01-01 12:00:00');
         $this->assertTrue($parser->isDue($expression, $atZero));
@@ -292,7 +292,7 @@ class CronParserTest extends NafTestCase
     public function testMinuteBoundaryFiftyNineMatches(): void
     {
         $expression = '59 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $atFiftyNine = new DateTimeImmutable('2024-01-01 12:59:00');
         $this->assertTrue($parser->isDue($expression, $atFiftyNine));
@@ -301,7 +301,7 @@ class CronParserTest extends NafTestCase
     public function testHourBoundaryZeroMatches(): void
     {
         $expression = '0 0 * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $midnight = new DateTimeImmutable('2024-01-01 00:00:00');
         $this->assertTrue($parser->isDue($expression, $midnight));
@@ -310,7 +310,7 @@ class CronParserTest extends NafTestCase
     public function testHourBoundaryTwentyThreeMatches(): void
     {
         $expression = '0 23 * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $elevenPM = new DateTimeImmutable('2024-01-01 23:00:00');
         $this->assertTrue($parser->isDue($expression, $elevenPM));
@@ -319,7 +319,7 @@ class CronParserTest extends NafTestCase
     public function testDayOfMonthBoundaryOneMatches(): void
     {
         $expression = '0 0 1 * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $firstDay = new DateTimeImmutable('2024-01-01 00:00:00');
         $this->assertTrue($parser->isDue($expression, $firstDay));
@@ -328,7 +328,7 @@ class CronParserTest extends NafTestCase
     public function testDayOfMonthBoundaryThirtyOneMatches(): void
     {
         $expression = '0 0 31 * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $lastDay = new DateTimeImmutable('2024-01-31 00:00:00');
         $this->assertTrue($parser->isDue($expression, $lastDay));
@@ -337,7 +337,7 @@ class CronParserTest extends NafTestCase
     public function testMonthBoundaryJanuaryMatches(): void
     {
         $expression = '0 0 1 1 *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $jan = new DateTimeImmutable('2024-01-01 00:00:00');
         $this->assertTrue($parser->isDue($expression, $jan));
@@ -346,7 +346,7 @@ class CronParserTest extends NafTestCase
     public function testMonthBoundaryDecemberMatches(): void
     {
         $expression = '0 0 1 12 *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $dec = new DateTimeImmutable('2024-12-01 00:00:00');
         $this->assertTrue($parser->isDue($expression, $dec));
@@ -355,7 +355,7 @@ class CronParserTest extends NafTestCase
     public function testWeekdayBoundarySundayMatches(): void
     {
         $expression = '0 0 * * 0';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $sunday = new DateTimeImmutable('2024-01-07 00:00:00'); // Sunday
         $this->assertTrue($parser->isDue($expression, $sunday));
@@ -364,7 +364,7 @@ class CronParserTest extends NafTestCase
     public function testWeekdayBoundarySaturdayMatches(): void
     {
         $expression = '0 0 * * 6';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $saturday = new DateTimeImmutable('2024-01-06 00:00:00'); // Saturday
         $this->assertTrue($parser->isDue($expression, $saturday));
@@ -377,7 +377,7 @@ class CronParserTest extends NafTestCase
     public function testStepTwoMinutesMatches(): void
     {
         $expression = '*/2 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
         $this->assertFalse($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:01:00')));
@@ -387,7 +387,7 @@ class CronParserTest extends NafTestCase
     public function testStepTenMinutesMatches(): void
     {
         $expression = '*/10 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:10:00')));
@@ -398,7 +398,7 @@ class CronParserTest extends NafTestCase
     public function testStepFifteenMinutesMatches(): void
     {
         $expression = '*/15 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:15:00')));
@@ -410,7 +410,7 @@ class CronParserTest extends NafTestCase
     public function testStepThreeHoursMatches(): void
     {
         $expression = '0 */3 * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 03:00:00')));
@@ -421,7 +421,7 @@ class CronParserTest extends NafTestCase
     public function testStepFiveDaysMatches(): void
     {
         $expression = '0 0 */5 * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-06 00:00:00')));
@@ -432,7 +432,7 @@ class CronParserTest extends NafTestCase
     public function testStepThreeMonthsMatches(): void
     {
         $expression = '0 0 1 */3 *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-04-01 00:00:00')));
@@ -443,7 +443,7 @@ class CronParserTest extends NafTestCase
     public function testInvalidStepZeroDoesNotMatch(): void
     {
         $expression = '*/0 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertFalse($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
     }
@@ -451,7 +451,7 @@ class CronParserTest extends NafTestCase
     public function testInvalidStepNegativeDoesNotMatch(): void
     {
         $expression = '*/-5 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertFalse($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
     }
@@ -463,7 +463,7 @@ class CronParserTest extends NafTestCase
     public function testRangeHoursNineToFiveMatches(): void
     {
         $expression = '0 9-17 * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 09:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
@@ -475,7 +475,7 @@ class CronParserTest extends NafTestCase
     public function testRangeMonthsAprilToOctoberMatches(): void
     {
         $expression = '0 0 1 4-10 *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-04-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-07-01 00:00:00')));
@@ -487,7 +487,7 @@ class CronParserTest extends NafTestCase
     public function testRangeWeekdaysMondayToFridayMatches(): void
     {
         $expression = '0 0 * * 1-5';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00'))); // Monday
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-05 00:00:00'))); // Friday
@@ -498,7 +498,7 @@ class CronParserTest extends NafTestCase
     public function testInvalidRangeReversedDoesNotMatch(): void
     {
         $expression = '10-5 * * * *'; // Invalid: end < start
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertFalse($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:07:00')));
     }
@@ -510,7 +510,7 @@ class CronParserTest extends NafTestCase
     public function testListMultipleMinutesMatches(): void
     {
         $expression = '0,15,30,45 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:15:00')));
@@ -522,7 +522,7 @@ class CronParserTest extends NafTestCase
     public function testListMultipleHoursMatches(): void
     {
         $expression = '0 6,12,18 * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 06:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
@@ -533,7 +533,7 @@ class CronParserTest extends NafTestCase
     public function testListMultipleDaysOfMonthMatches(): void
     {
         $expression = '0 0 1,15 * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-15 00:00:00')));
@@ -543,7 +543,7 @@ class CronParserTest extends NafTestCase
     public function testListMultipleMonthsMatches(): void
     {
         $expression = '0 0 1 1,4,7,10 *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-04-01 00:00:00')));
@@ -555,7 +555,7 @@ class CronParserTest extends NafTestCase
     public function testListMultipleWeekdaysMatches(): void
     {
         $expression = '0 0 * * 0,3,6'; // Sun, Wed, Sat
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-03 00:00:00'))); // Wednesday
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-06 00:00:00'))); // Saturday
@@ -570,7 +570,7 @@ class CronParserTest extends NafTestCase
     public function testListWithRangesMatches(): void
     {
         $expression = '0,15,30-35,45 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:15:00')));
@@ -585,7 +585,7 @@ class CronParserTest extends NafTestCase
     public function testMultipleListsInDifferentFieldsMatches(): void
     {
         $expression = '0,30 9,17 * * 1,5'; // 9am & 5pm on Mon & Fri
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 09:00:00'))); // Mon 9am
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 09:30:00'))); // Mon 9:30am
@@ -602,7 +602,7 @@ class CronParserTest extends NafTestCase
     public function testMultipleSpacesBetweenFieldsNormalized(): void
     {
         $expression = '0    12     *      *       *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
     }
@@ -610,7 +610,7 @@ class CronParserTest extends NafTestCase
     public function testTabCharactersNormalized(): void
     {
         $expression = "0\t12\t*\t*\t*";
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
     }
@@ -618,7 +618,7 @@ class CronParserTest extends NafTestCase
     public function testMixedWhitespaceNormalized(): void
     {
         $expression = " 0 \t 12  \t * \t * \t * ";
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
     }
@@ -630,7 +630,7 @@ class CronParserTest extends NafTestCase
     public function testSameExpressionUsedMultipleTimesUsesCaching(): void
     {
         $expression = '*/5 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         // First call should parse
         $result1 = $parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00'));
@@ -665,65 +665,65 @@ class CronParserTest extends NafTestCase
     public function testNextRunWithLeapYearFebruary29(): void
     {
         $expression = '0 0 29 2 *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
-        $now = new DateTimeImmutable('2024-02-28 23:00:00'); // 2024 is leap year
+        $now      = new DateTimeImmutable('2024-02-28 23:00:00'); // 2024 is leap year
         $expected = new DateTimeImmutable('2024-02-29 00:00:00');
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
     public function testNextRunCrossesMonthBoundary(): void
     {
         $expression = '0 0 * * *'; // Every day at midnight
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
-        $now = new DateTimeImmutable('2024-01-31 23:30:00');
+        $now      = new DateTimeImmutable('2024-01-31 23:30:00');
         $expected = new DateTimeImmutable('2024-02-01 00:00:00');
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
     public function testNextRunCrossesYearBoundary(): void
     {
         $expression = '0 0 * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
-        $now = new DateTimeImmutable('2023-12-31 23:30:00');
+        $now      = new DateTimeImmutable('2023-12-31 23:30:00');
         $expected = new DateTimeImmutable('2024-01-01 00:00:00');
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
     public function testNextRunForVeryRareExpression(): void
     {
         $expression = '0 0 31 12 *'; // New Year's Eve at midnight
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
-        $now = new DateTimeImmutable('2024-01-01 00:00:00');
+        $now      = new DateTimeImmutable('2024-01-01 00:00:00');
         $expected = new DateTimeImmutable('2024-12-31 00:00:00');
 
         $this->assertSame(
             $expected->getTimestamp(),
-            $parser->nextRun($expression, $now)->getTimestamp()
+            $parser->nextRun($expression, $now)->getTimestamp(),
         );
     }
 
     public function testNextRunSecondsAreSetToZero(): void
     {
         $expression = '* * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
-        $now = new DateTimeImmutable('2024-01-01 12:00:45'); // 45 seconds
+        $now  = new DateTimeImmutable('2024-01-01 12:00:45'); // 45 seconds
         $next = $parser->nextRun($expression, $now);
 
         $this->assertSame('00', $next->format('s'));
@@ -772,7 +772,7 @@ class CronParserTest extends NafTestCase
     public function testInvalidCharactersInFieldDoNotMatch(): void
     {
         $expression = '@invalid * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertFalse($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
     }
@@ -780,7 +780,7 @@ class CronParserTest extends NafTestCase
     public function testMultipleSlashesDoNotMatch(): void
     {
         $expression = '*//5 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertFalse($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00')));
     }
@@ -788,7 +788,7 @@ class CronParserTest extends NafTestCase
     public function testMultipleDashesDoNotMatch(): void
     {
         $expression = '5--10 * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertFalse($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:07:00')));
     }
@@ -796,7 +796,7 @@ class CronParserTest extends NafTestCase
     public function testTrailingCommaDoesNotMatch(): void
     {
         $expression = '5,10, * * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         // Depending on implementation, this might match or not. Let's test behavior.
         $result = $parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:05:00'));
@@ -810,7 +810,7 @@ class CronParserTest extends NafTestCase
     public function testEveryMondayMorningNineAM(): void
     {
         $expression = '0 9 * * 1';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $monday = new DateTimeImmutable('2024-01-01 09:00:00'); // Monday
         $this->assertTrue($parser->isDue($expression, $monday));
@@ -822,7 +822,7 @@ class CronParserTest extends NafTestCase
     public function testFirstDayOfEveryMonth(): void
     {
         $expression = '0 0 1 * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-02-01 00:00:00')));
@@ -833,7 +833,7 @@ class CronParserTest extends NafTestCase
     public function testEveryQuarterStartMidnight(): void
     {
         $expression = '0 0 1 1,4,7,10 *'; // Jan, Apr, Jul, Oct
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 00:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-04-01 00:00:00')));
@@ -845,7 +845,7 @@ class CronParserTest extends NafTestCase
     public function testWeekdayLunchBreak(): void
     {
         $expression = '0 12 * * 1-5'; // Noon, Monday-Friday
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 12:00:00'))); // Monday
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-05 12:00:00'))); // Friday
@@ -856,7 +856,7 @@ class CronParserTest extends NafTestCase
     public function testNightlyBackupAtThreeAM(): void
     {
         $expression = '0 3 * * *';
-        $parser = new CronParser();
+        $parser     = new CronParser();
 
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-01 03:00:00')));
         $this->assertTrue($parser->isDue($expression, new DateTimeImmutable('2024-01-15 03:00:00')));
