@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Naf\Schedule;
 
 use Naf\Schedule\Core\Scheduler;
+
 use function Naf\app;
 
 /**

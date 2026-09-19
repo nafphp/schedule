@@ -67,3 +67,7 @@ and queue storage. Verify boundary times, repeated ticks, payloads and actual wo
 No `analyse` script is declared.
 
 User docs: [Scheduling](https://nafphp.github.io/docs/scheduling/).
+
+Follow the shared [PHP code style](https://github.com/nafphp/docs/blob/main/CODE_STYLE.md)
+and `.php-cs-fixer.dist.php`. Run `composer style:check`; `composer style:fix` applies the rules.
+Keep logical steps and local names readable, preserving public signatures and template output.

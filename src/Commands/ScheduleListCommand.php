@@ -12,6 +12,7 @@ use Naf\Schedule\Core\JobRepository;
 use Naf\Schedule\Core\ScheduledJobInterface;
 use Naf\Schedule\Support\CronParser;
 use Throwable;
+
 use function Naf\app;
 
 final class ScheduleListCommand extends AbstractCommand
@@ -71,29 +72,30 @@ final class ScheduleListCommand extends AbstractCommand
 
         if ($rows === []) {
             $output->writeLine('No scheduled jobs registered.');
+
             return self::SUCCESS;
         }
 
         if (!$noSort) {
-            usort($rows, static fn ($a, $b) => $a['next_ts'] <=> $b['next_ts']);
+            usort($rows, static fn($a, $b) => $a['next_ts'] <=> $b['next_ts']);
         }
 
-        $jobWidth  = min(max(array_map(fn ($r) => strlen($r['job']), $rows)), 80);
+        $jobWidth  = min(max(array_map(fn($r) => strlen($r['job']), $rows)), 80);
         $timeWidth = 19;
         $inWidth   = 12;
 
         $output->writeLine(
-            str_pad('Job', $jobWidth) .
-            ' | ' . str_pad('Next run', $timeWidth) .
-            ' | In'
+            str_pad('Job', $jobWidth)
+            . ' | ' . str_pad('Next run', $timeWidth)
+            . ' | In',
         );
         $output->writeLine(str_repeat('-', $jobWidth + $timeWidth + $inWidth + 6));
 
         foreach ($rows as $r) {
             $output->writeLine(
-                str_pad($r['job'], $jobWidth) .
-                ' | ' . str_pad($r['next'], $timeWidth) .
-                ' | ' . $r['in']
+                str_pad($r['job'], $jobWidth)
+                . ' | ' . str_pad($r['next'], $timeWidth)
+                . ' | ' . $r['in'],
             );
         }
 
@@ -132,11 +134,13 @@ final class ScheduleListCommand extends AbstractCommand
         if ($seconds < 86_400) {
             $h = floor($seconds / 3600);
             $m = floor(($seconds % 3600) / 60);
+
             return $h . 'h ' . $m . 'm';
         }
 
         $d = floor($seconds / 86_400);
         $h = floor(($seconds % 86_400) / 3600);
+
         return $d . 'd ' . $h . 'h';
     }
 }
