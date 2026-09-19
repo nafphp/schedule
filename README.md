@@ -39,9 +39,7 @@ composer require naf/schedule
 MIT. Part of [NAF](https://github.com/nafphp/framework).
 
 
-## Unreleased Nafinity integration candidate
-
-Target branch: `v0.2.3-rc`. This behavior is not a published release yet.
+## Behavior notes
 
 `schedule:ticker --workers=1 --max-jobs=10 --max-runtime=60` starts the real queue
 consumer with validated integer limits. Embedded workers write to the host's
