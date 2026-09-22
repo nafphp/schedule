@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "533bc4381132adab7761bdeabcb3a7c1",
+    "content-hash": "5b67ce438ccaf2f09c19032f73f7aaee",
     "packages": [
         {
             "name": "naf/cli",
